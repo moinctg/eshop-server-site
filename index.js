@@ -59,14 +59,14 @@ async function run() {
   });
 
   // single service
-//   app.get("/singleService/:id", async (req, res) => {
-//     // console.log(req.params.id);
-//     const result = await servicesCollection
-//       .find({ _id: ObjectId(req.params.id) })
-//       .toArray();
-//     res.send(result[0]);
-//     // console.log(result);
-//   });
+  app.get("/singleService/:id", async (req, res) => {
+    // console.log(req.params.id);
+    const result = await servicesCollection
+      .find({ _id: ObjectId(req.params.id) })
+      .toArray();
+    res.send(result[0]);
+    // console.log(result);
+  });
 
 //   // insert order and
 
