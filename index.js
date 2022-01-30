@@ -47,6 +47,8 @@ async function run() {
     console.log(req.body);
     const result = await ProductsCollection.insertOne(req.body);
     res.send(result);
+
+    
   });
 
   // get all services
