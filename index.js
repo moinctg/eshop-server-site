@@ -128,11 +128,11 @@ async function run() {
 //   });
 
 //   /// all order
-//   app.get("/allOrders", async (req, res) => {
-//     // console.log("hello");
-//     const result = await ordersCollection.find({}).toArray();
-//     res.send(result);
-//   });
+  app.get("/allOrders", async (req, res) => {
+    // console.log("hello");
+    const result = await ordersCollection.find({}).toArray();
+    res.send(result);
+  });
 
 //   // status update
 //   app.put("/statusUpdate/:id", async (req, res) => {
