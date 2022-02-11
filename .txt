@@ -1,0 +1,2 @@
+DB_USER=eshop_user
+DB_PASS=0Yfk332fBEtTcN6L
