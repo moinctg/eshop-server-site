@@ -57,9 +57,11 @@ async function run() {
   // Payment Initializaiton api 
 
   //sslcommerz init
-app.get('/init', (req, res) => {
+app.post('/init', (req, res) => {
+
+  console.log(req.body)
   const data = {
-      total_amount: 100,
+      total_amount:req.body.total_amount,
       currency: 'BDT',
       tran_id: 'REF123',
       success_url: 'http://localhost:8000/success',
@@ -67,11 +69,12 @@ app.get('/init', (req, res) => {
       cancel_url: 'http://localhost:8000/cancel',
       ipn_url: 'http://localhost:8000/ipn',
       shipping_method: 'Courier',
-      product_name: 'Computer.',
+      product_name: req.body.product_name,
+      product_image: req.body.product_image,
       product_category: 'Electronic',
       product_profile: 'general',
-      cus_name: 'Customer Name',
-      cus_email: 'cust@yahoo.com',
+      cus_name: req.body.cus_name,
+      cus_email: req.body.cus_email,
       cus_add1: 'Dhaka',
       cus_add2: 'Dhaka',
       cus_city: 'Dhaka',
@@ -93,29 +96,39 @@ app.get('/init', (req, res) => {
       value_c: 'ref003_C',
       value_d: 'ref004_D'
   };
+  console.log(data)
   const sslcommer = new SSLCommerzPayment(process.env.Store_ID, process.env.Store_Password,false) //true for live default false for sandbox
   sslcommer.init(data).then(data => {
       //process the response that got from sslcommerz 
       //https://developer.sslcommerz.com/doc/v4/#returned-parameters
       // console.log(data);
-      res.redirect(data. GatewayPageURL)
+     if (data.GatewayPageURL){
+       res.json(data.GatewayPageURL)
+     }
+     else{
+       return res.status(400).json({ 
+         message:'payment session faild'
+
+         }
+       )
+     }
       // console.log(data)
   });
 })
 
 app.post('/success',async(req,res) =>{
   console.log(req.body)
-  res.status(200).json(req.body)
+  res.status(200).redirect('http://localhost:3000/success')
 
 })
 app.post('/fail',async(req,res) =>{
   console.log(req.body)
-  res.status(400).json(req.body)
+  res.status(400).redirect('http://localhost:3000')
 
 })
 app.post('/cancel',async(req,res) =>{
   console.log(req.body)
-  res.status(200).json(req.body)
+  res.status(200).redirect('http://localhost:3000')
 
 })
 
